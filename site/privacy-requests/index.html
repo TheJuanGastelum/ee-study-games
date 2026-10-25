@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your data · Study Games</title><meta name="robots" content="noindex">
+<script src="/privacy.js"></script>
+<style>
+:root{--bg:#0b0d1c;--panel:#181b36;--line:#3d4380;--ink:#f3f4fb;--dim:#a4a9d6;--accent:#ffb454;--mono:ui-monospace,Menlo,Consolas,monospace}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+main{max-width:820px;margin:0 auto;padding:20px 16px 60px}
+h1{font:800 clamp(1.5rem,5vw,2.2rem) var(--mono);color:var(--accent);margin:8px 0}
+h2{font:800 1.15rem var(--mono);color:var(--accent);margin:28px 0 6px}
+a{color:#8ec5ff}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #ffe66d;outline-offset:2px}
+p,li{color:#dfe2fb}.dim{color:var(--dim);font-size:.9rem}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.92rem}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:var(--panel)}
+.tw{overflow-x:auto}.tw table{min-width:640px}
+.box{background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0}
+.top{display:flex;gap:14px;flex-wrap:wrap;font:700 .85rem var(--mono)}
+label{display:block;margin:12px 0 4px;font-weight:700}input,select,textarea{width:100%;padding:10px;border-radius:8px;border:2px solid var(--line);background:#0b0d1c;color:var(--ink);font:inherit}
+button.b{font:800 .95rem var(--mono);padding:10px 16px;border-radius:10px;border:2px solid #7ef7c1;background:#0b0d1c;color:#7ef7c1;cursor:pointer;margin:6px 8px 6px 0}button.b.d{border-color:#ff6b6b;color:#ff6b6b}
+.hp{position:absolute;left:-9999px}
+</style></head><body><main>
+<div class="top"><a href="/">⌂ Main screen</a><a href="/privacy-policy/">Privacy policy</a><a href="/terms/">Terms</a><a href="/privacy-requests/">Your data</a></div>
+
+<h1>Your data and privacy requests</h1>
+
+<h2>1. Data saved in this browser</h2>
+<p>This is the only personal-ish data the games keep (progress and settings). It lives on your device. Use these buttons to see it or erase it.</p>
+<div class="box">
+<button class="b" id="exp" type="button">Download my saved data (JSON)</button>
+<button class="b d" id="del" type="button">Delete my saved data</button>
+<p id="msg" class="dim" role="status" aria-live="polite"></p>
+</div>
+<p class="dim">Deleting resets your levels and stars on this device and also forgets that you dismissed the privacy notice. Saved data is also deleted automatically after 12 months without a visit.</p>
+
+<h2>2. Ask the operator about data they hold</h2>
+<p>The operator holds almost nothing about you. The only things are hosting logs kept by the host and any earlier request you sent. You can ask to <b>access</b> or <b>delete</b> these (your &ldquo;right to be forgotten&rdquo;), or send any other privacy question. We reply within 30 days.</p>
+<p>The form collects only what is needed to answer you: an email address, the request type and optional details. It is received by Netlify, the host. Do not include passwords or sensitive information.</p>
+<form name="privacy-request" method="POST" action="/privacy-requests/thanks/" data-netlify="true" netlify-honeypot="bot-field">
+<input type="hidden" name="form-name" value="privacy-request">
+<p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+<label for="rt">What do you want?</label>
+<select id="rt" name="request_type" required><option value="access">Access: show me what you hold about me</option><option value="delete">Delete: erase what you hold about me</option><option value="other">Another privacy question</option></select>
+<label for="em">Your email (so we can reply)</label>
+<input id="em" name="email" type="email" required autocomplete="email">
+<label for="dt">Details (optional)</label>
+<textarea id="dt" name="details" rows="4"></textarea>
+<p><button class="b" type="submit">Send request</button></p>
+</form>
+<script>
+(function () {
+  var msg = document.getElementById('msg');
+  document.getElementById('exp').onclick = function () {
+    var blob = new Blob([JSON.stringify(Privacy.exportData(), null, 2)], { type: 'application/json' });
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'my-study-games-data.json'; a.click();
+    msg.textContent = 'Downloaded.';
+  };
+  document.getElementById('del').onclick = function () {
+    if (!confirm('Delete your saved progress on this device?')) return;
+    Privacy.deleteData(); msg.textContent = 'Deleted. Your saved data on this device is gone.';
+  };
+})();
+</script>
+
+<p class="dim">Last updated 2026-10-25. This page describes how this particular site works. It is not legal advice.</p>
+</main></body></html>

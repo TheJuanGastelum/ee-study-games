@@ -843,6 +843,7 @@ const Kit = (() => {
     const ab = h('button', { id: 'anaBtn', class: 'anabtn', onclick: e => { setAna(!S.ana); e.currentTarget.blur(); } }, h('span'));
     document.body.append(ab); anaLabel();
     document.body.append(h('a', { class: 'hubbtn', href: '../', title: 'Back to the main screen' }, '⌂ Hub'));
+    document.body.append(h('footer', { class: 'privfoot' }, h('a', { href: '/privacy-policy/' }, 'Privacy'), ' · ', h('a', { href: '/terms/' }, 'Terms'), ' · ', h('a', { href: '/privacy-requests/' }, 'Your data')));
     cfg.levels.forEach(l => { l.chals = l.chals.map((c, i) => [c, i]).sort((a, b) => ((a[0].t === 'lab' ? 0 : 1) - (b[0].t === 'lab' ? 0 : 1)) || ((a[0].boss ? 1 : 0) - (b[0].boss ? 1 : 0)) || ((a[0].tier || 1) - (b[0].tier || 1)) || a[1] - b[1]).map(x => x[0]); });
     home();
     if (TEST) window.__kit = {

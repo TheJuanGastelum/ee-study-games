@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Circuit Basics Quest</title><style>:root{
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Circuit Basics Quest</title><script src="/privacy.js"></script><style>:root{
   --bg:#0e1020; --panel:#181b36; --panel2:#232749; --line:#3d4380; --ink:#f3f4fb; --dim:#a4a9d6;
   --accent:#7ef7c1; --accent2:#ffe66d; --bad:#ff6b6b; --good:#7ef7c1; --accent-ink:#06210f;
   --mono:ui-monospace,"Cascadia Code","SF Mono",Menlo,Consolas,"Courier New",monospace;
@@ -219,6 +219,8 @@ details.review summary{cursor:pointer;font-weight:700;color:var(--dim)}
 
 .hubbtn{position:fixed;top:10px;left:12px;z-index:50;padding:8px 14px;border-radius:999px;border:2px solid var(--line);background:#181b36ee;color:var(--ink);font:800 .8rem var(--mono);letter-spacing:.04em;text-decoration:none;box-shadow:0 3px 0 #0007}
 .hubbtn:hover{background:#232749}
+
+.privfoot{text-align:center;padding:6px 16px 90px;font:700 .75rem var(--mono);color:var(--dim)}.privfoot a{color:var(--dim)}
 
 :root{--accent:#4aa3ff}</style></head><body><main id="app"></main><script>const ANA_L = {};
 /* ===== Shared game kit: level select, challenge runner, scoring, progress ===== */
@@ -1066,6 +1068,7 @@ const Kit = (() => {
     const ab = h('button', { id: 'anaBtn', class: 'anabtn', onclick: e => { setAna(!S.ana); e.currentTarget.blur(); } }, h('span'));
     document.body.append(ab); anaLabel();
     document.body.append(h('a', { class: 'hubbtn', href: '../', title: 'Back to the main screen' }, '⌂ Hub'));
+    document.body.append(h('footer', { class: 'privfoot' }, h('a', { href: '/privacy-policy/' }, 'Privacy'), ' · ', h('a', { href: '/terms/' }, 'Terms'), ' · ', h('a', { href: '/privacy-requests/' }, 'Your data')));
     cfg.levels.forEach(l => { l.chals = l.chals.map((c, i) => [c, i]).sort((a, b) => ((a[0].t === 'lab' ? 0 : 1) - (b[0].t === 'lab' ? 0 : 1)) || ((a[0].boss ? 1 : 0) - (b[0].boss ? 1 : 0)) || ((a[0].tier || 1) - (b[0].tier || 1)) || a[1] - b[1]).map(x => x[0]); });
     home();
     if (TEST) window.__kit = {

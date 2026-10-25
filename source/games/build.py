@@ -19,6 +19,6 @@ for g in (sys.argv[1:] or GAMES):
     if not os.path.exists(G+c["data"]): print("skip",g); continue
     css=rd("kit.css")+"\n:root{--accent:%s}"%c["accent"]
     js="const ANA_L = "+anajson(c["ana"])+";\n"+rd("kit.js")+"\n"+rd(c["data"])+"\n"+"\n".join(rd(f) for f in c.get("learn",[]))+"\n"+rd(c["stage"])+"\n"+rd(c["init"])
-    html='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>%s</title><style>%s</style></head><body><main id="app"></main><script>%s</script></body></html>'%(c["title"],css,js)
+    html='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>%s</title><script src="/privacy.js"></script><style>%s</style></head><body><main id="app"></main><script>%s</script></body></html>'%(c["title"],css,js)
     open(OUT+c["out"],"w",encoding="utf8").write(html)
     print(g,len(html)//1024,"KB ->",OUT+c["out"])
